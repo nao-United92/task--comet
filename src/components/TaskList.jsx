@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { CreateTaskForm } from "./CreateTaskForm";
-import { TaskItem } from "./TaskItem";
+import { TaskItem } from "./Taskitem";
 import { CometRushView } from "./CometRushView";
 
 export function TaskList({ tasks, onTaskCreate, onTaskUpdate, onSubtaskAdd, onSubtaskUpdate, onSubtaskDelete }) {
@@ -28,15 +28,16 @@ export function TaskList({ tasks, onTaskCreate, onTaskUpdate, onSubtaskAdd, onSu
   }, [tasks]);
 
   const handleTagClick = (tag) => {
-    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
   };
 
   const filteredAndSortedTaskList = useMemo(() => {
-    const filtered = selectedTags.length === 0
+    const filtered =
+      selectedTags.length === 0
         ? tasks
-        : tasks.filter((task) =>
-            selectedTags.every((tag) => (task.tags || []).includes(tag)),
-          );
+        : tasks.filter((task) => selectedTags.every((tag) => (task.tags || []).includes(tag)));
 
     const priorityOrder = { high: 1, medium: 2, low: 3 };
 
@@ -70,7 +71,8 @@ export function TaskList({ tasks, onTaskCreate, onTaskUpdate, onSubtaskAdd, onSu
                   selectedTags.includes(tag)
                     ? "bg-sky-600 text-white font-semibold"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}>
+                }`}
+              >
                 #{tag}
               </button>
             ))}
